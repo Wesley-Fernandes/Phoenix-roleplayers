@@ -7,6 +7,9 @@ module.exports = {
   ],
   theme: {
     extend: {
+      dropShadow: {
+        'sm': '0 1px 1px #15b0e6',
+      },
       backgroundImage: {
         'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
         'gradient-conic':
@@ -14,5 +17,8 @@ module.exports = {
       },
     },
   },
-  plugins: [],
+  plugins: [require("daisyui")],
+  daisyui: {
+    themes: ["dark", "cupcake"],
+  }
 }

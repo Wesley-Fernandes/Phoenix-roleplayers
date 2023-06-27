@@ -1,0 +1,11 @@
+.Page{
+    height: calc(100vh - 68px);
+
+    .Messages{
+        height: calc(100vh - 68px - 74px);
+        display: flex;
+        flex-direction: column;
+        padding: 5px;
+        overflow-y: scroll;
+    }
+}
