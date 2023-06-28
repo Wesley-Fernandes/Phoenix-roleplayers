@@ -4,21 +4,43 @@ import FooterChat from "@modules/components/FooterChat";
 import style from "./page.module.css";
 import React, { useEffect, useRef, useState } from "react";
 import { db, app } from "../firebase/firebase";
-import { collection, query, where, onSnapshot } from "firebase/firestore";
+import {
+  collection,
+  query,
+  where,
+  onSnapshot,
+  limit,
+  doc,
+  getDoc,
+  getDocs,
+} from "firebase/firestore";
 import { useSearchParams } from "next/navigation";
 
 export default function Chat() {
   const [messages, setMessages] = useState<any[]>([]);
-  const messagesRef = useRef<HTMLDivElement>(null)
+  const [chatInfo, setChatInfo] = useState<any>(null);
+
+
+  const messagesRef = useRef<HTMLDivElement>(null);
   const search = useSearchParams();
   const id = search.get("id");
-  const divElement = document.getElementById('messages')
+  const divElement = document.getElementById("messages");
 
   useEffect(() => {
+    async function getChatInformation() {
+      if (id) {
+        const docRef = doc(db, "ChatsInformations", id)
+        const docSnap = await getDoc(docRef)
+        setChatInfo(docSnap.data());
+      }
+    }
+
+    getChatInformation();
     async function fetchMessages() {
       const task = query(
         collection(db, "ChatMessages"),
-        where("chatID", "==", id)
+        where("chatID", "==", id),
+        limit(10)
       );
       const unsubscribe = onSnapshot(task, (querySnapshot) => {
         querySnapshot.docChanges().forEach((doc) => {
@@ -36,30 +58,27 @@ export default function Chat() {
   useEffect(() => {
     if (divElement) {
       divElement.scrollTop = divElement.scrollHeight;
-      divElement.scrollIntoView({behavior: 'smooth', block: 'end'})
+      divElement.scrollIntoView({ behavior: "smooth", block: "end" });
     }
-  }, [messages])
+  }, [messages]);
   return (
     <>
       {id ? (
         <div className={style.Page}>
-          <main className={style.Messages} id="messages">
+          <main className={style.Messages} id="messages" style={{backgroundImage: `url(${chatInfo?.backgroundImage})`, backgroundSize: 'cover'}}>
             {messages.map(
-              (
-                {
-                  chatID,
-                  created,
-                  id,
-                  type,
-                  userID,
-                  username,
-                  content,
-                }: IMessage,
-                index: number
-              ) => {
+              ({
+                chatID,
+                created,
+                id,
+                type,
+                userID,
+                username,
+                content,
+              }: IMessage) => {
                 return (
                   <Bubble
-                    key={index}
+                    key={id}
                     type={type}
                     userID={userID}
                     chatID={chatID}

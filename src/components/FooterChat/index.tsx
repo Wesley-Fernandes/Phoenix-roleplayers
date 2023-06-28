@@ -1,6 +1,12 @@
 import React, { useRef } from "react";
 import InputChat from "../InputChat";
-import { RiSendPlaneFill } from "react-icons/ri";
+
+//icons
+import { RiSendPlaneFill, RiSwordLine, RiPhoneFill } from "react-icons/ri";
+import { GiPerspectiveDiceFive, GiBackpack } from "react-icons/gi";
+import { SlOptionsVertical } from "react-icons/sl";
+
+//firebase
 import { collection, addDoc } from "firebase/firestore";
 import { db } from "@modules/app/firebase/firebase";
 
@@ -9,6 +15,7 @@ interface IFooter {
 }
 export default function FooterChat({ chatID }: IFooter) {
   const formRef = useRef<HTMLFormElement>(null);
+  const modalRef = useRef<HTMLDialogElement>(null);
 
   async function sendNewMessage(e: any) {
     e.preventDefault();
@@ -58,8 +65,41 @@ export default function FooterChat({ chatID }: IFooter) {
       className="border-t-2 flex bg-indigo-900 p-3"
       onSubmit={sendNewMessage}
     >
+      <dialog id="chatModal" className="modal" ref={modalRef}>
+        <form method="dialog" className="modal-box">
+          <h3 className="font-bold text-lg mb-2">Ações</h3>
+          <p className="mb-3">Em desenvolvimento</p>
+          <div className="flex gap-3 items-center justify-center">
+            <button type="button" className="btn">
+              <RiSwordLine size={35} />
+            </button>
+            <button type="button" className="btn">
+              <GiPerspectiveDiceFive size={35} />
+            </button>
+            <button type="button" className="btn">
+              <RiPhoneFill size={35} />
+            </button>
+            <button type="button" className="btn">
+              <GiBackpack size={35} />
+            </button>
+          </div>
+          <div className="modal-action">
+            <button className="btn">Fechar</button>
+          </div>
+        </form>
+      </dialog>
+
+      <button
+        type="button"
+        onClick={() => {
+          modalRef.current?.showModal();
+        }}
+        className="btn btn-ghost flex items-center justify-center"
+      >
+        <SlOptionsVertical size={32} />
+      </button>
       <InputChat />
-      <button className="btn btn-ghost">
+      <button type="submit" className="btn btn-ghost">
         <RiSendPlaneFill size={32} />
       </button>
     </form>

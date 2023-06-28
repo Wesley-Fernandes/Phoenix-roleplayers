@@ -55,7 +55,7 @@ export default function Bubble({
             {username}
             <time className="text-xs opacity-50 ml-3">{time}</time>
           </div>
-          <p className="chat-bubble">{content}</p>
+          <pre className="chat-bubble">{content}</pre>
         </div>
       ) : (
         <div className="chat chat-end">

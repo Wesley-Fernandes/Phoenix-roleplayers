@@ -31,7 +31,7 @@ export default function Home() {
       .then((userCredential) => {
         const user = userCredential.user;
         localStorage.setItem("PhoenixUser", JSON.stringify(user));
-        push("/Chat?id=101010");
+        push("/Chat?id=K1OwIuzMLYH2mouoclAU");
       })
       .catch((error) => {
         const errorCode = error.code;

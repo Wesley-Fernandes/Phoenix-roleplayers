@@ -1,8 +1,8 @@
 .Page{
-    height: calc(100vh - 68px);
+    height: calc(100vh - 69px);
 
     .Messages{
-        height: calc(100vh - 68px - 74px);
+        height: calc(100vh - 69px - 74px);
         display: flex;
         flex-direction: column;
         padding: 5px;
