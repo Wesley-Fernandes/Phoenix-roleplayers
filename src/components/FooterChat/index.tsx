@@ -62,7 +62,7 @@ export default function FooterChat({ chatID }: IFooter) {
   return (
     <form
       ref={formRef}
-      className="border-t-2 flex bg-indigo-900 p-3"
+      className="border-t-2 flex justify-between items-center bg-indigo-900 pt-1 pb-1"
       onSubmit={sendNewMessage}
     >
       <dialog id="chatModal" className="modal" ref={modalRef}>
